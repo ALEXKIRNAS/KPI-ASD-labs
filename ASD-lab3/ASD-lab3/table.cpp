@@ -55,7 +55,7 @@ void addNewEngine(Engine** table, int& count)
 
 	printf("Enter name of engine: ");
 	std::cin.ignore();
-	gets_s(name, Nmax);
+	gets(name);
 	if (strlen(name) > maxLengthOfName)
 	{
 		printf("Error. Name is to long! Try later.");
@@ -210,28 +210,36 @@ void sortByPower(Engine** table, int& count)
 	printf("Before:\n");
 	showEngineTable(table, count);
 
+	Engine** cTable = new Engine*[count];
+	for (int i = 0; i<count; i++) cTable[i] = table[i];
+
 	int min; // Індекс мінімального елементу
 	for (int i = 0; i<count; i++)
 	{
 		min = i;
 		for (int z = i + 1; z<count; z++)
-			if (table[min]->power > table[z]->power) min = z;
+			if (cTable[min]->power > cTable[z]->power) min = z;
 
-		swap(table, i, min);
+		swap(cTable, i, min);
 	}
 
 	printf("After:\n");
-	showEngineTable(table, count);
+	showEngineTable(cTable, count);
 }
 
 // Відсортувати таблицю за назвами двигунів
-void sortByName(Engine** table, int& count)
+void sortByName(Engine** CTable, int& count)
 {
 	if (count == 0)
 	{
 		printf("No elements in table!");
 		return;
 	}
+
+	Engine** table = new Engine*[count];
+	int* temp = new int[count];
+	for (int i = 0; i<count; i++) temp[i] = i + 1;
+	for (int i = 0; i<count; i++) table[i] = CTable[i];
 
 	printf("Before:\n");
 	showEngineTable(table, count);
@@ -244,10 +252,14 @@ void sortByName(Engine** table, int& count)
 			if (strcmp(table[min]->name, table[z]->name) > 0) min = z;
 
 		swap(table, i, min);
+		std::swap(temp[i], temp[min]);
 	}
 
 	printf("After:\n");
-	showEngineTable(table, count);
+	printf("%-3s%-*s%-10s%-15s%-15s\n", "№", maxLengthOfName + 1, "Name", "Power", "Efficiency", "Fuel consumtion");
+	for (int i = 0; i<count; i++)
+		printf("%-3d%-*s%-10d%-15.2Lf%-15.2Lf\n", temp[i], maxLengthOfName + 1, table[i]->name, table[i]->power, table[i]->efficiency, table[i]->fuelConsume);
+	printf("\n");
 }
 
 // Пошук за прямою адресою
@@ -264,7 +276,7 @@ void searchDirect(Engine** table, int& count)
 	printf("Enter number of element to search DERECT: ");
 	int number;
 	scanf("%d", &number);
-	if (number <= 0 || number >= count)
+	if (number <= 0 || number>count)
 	{
 		printf("Error! There is no number with number %d.", number);
 		return;
@@ -283,7 +295,7 @@ void searchLine(Engine** table, int& count)
 
 	char* name = new char[Nmax]; // Повна назва двигуна
 	printf("Enter name of engine: ");
-	gets_s(name, Nmax);
+	gets(name);
 	if (strlen(name) > maxLengthOfName)
 	{
 		printf("Error. Name is to long! Try later.");
@@ -295,7 +307,9 @@ void searchLine(Engine** table, int& count)
 	for (int i = 0; i<count; i++)
 		if (strcmp(table[i]->name, name) == 0)
 		{
-			printf("Direct number of Search (by LINE) element iS %d", i + 1);
+			printf("Direct number of Search (by LINE) element is %d\n", i + 1);
+			printf("%-3d%-*s%-10d%-15.2Lf%-15.2Lf\n", i + 1, maxLengthOfName + 1, table[i]->name, table[i]->power, table[i]->efficiency, table[i]->fuelConsume);
+
 			return;
 		}
 
@@ -311,10 +325,32 @@ void searchBinary(Engine** table, int& count, bool& isSorted)
 		return;
 	}
 
+	Engine** cTable = new Engine*[count];
+	int* temp = new int[count];
+	for (int i = 0; i<count; i++) {
+		cTable[i] = table[i];
+		temp[i] = i + 1;
+	}
+
+	isSorted = 0;
 	if (!isSorted) {
 		isSorted = 1;
 		printf("Sorting:\n");
-		sortByPower(table, count);
+
+		int min; // Індекс мінімального елементу
+		for (int i = 0; i<count; i++)
+		{
+			min = i;
+			for (int z = i + 1; z<count; z++)
+				if (cTable[min]->power > cTable[z]->power) min = z;
+
+			swap(cTable, i, min);
+			std::swap(temp[i], temp[min]);
+		}
+
+		printf("%-3s%-*s%-10s%-15s%-15s\n", "№", maxLengthOfName + 1, "Name", "Power", "Efficiency", "Fuel consumtion");
+		for (int i = 0; i<count; i++)
+			printf("%-3d%-*s%-10d%-15.2Lf%-15.2Lf\n", temp[i], maxLengthOfName + 1, cTable[i]->name, cTable[i]->power, cTable[i]->efficiency, cTable[i]->fuelConsume);
 		printf("\n");
 	}
 	else showEngineTable(table, count);
@@ -327,11 +363,11 @@ void searchBinary(Engine** table, int& count, bool& isSorted)
 	while (l + 1 < r)
 	{
 		int m = (l + r) >> 1;
-		if (table[m]->power >= power) r = m;
+		if (cTable[m]->power >= power) r = m;
 		else l = m;
 	}
 
-	if (table[l]->power == power) printf("Direct number of element is %d", l + 1);
-	else if (table[r]->power == power) printf("Direct number of element is %d", r + 1);
+	if (cTable[l]->power == power) printf("Direct number of element is %d", temp[l]);
+	else if (cTable[r]->power == power) printf("Direct number of element is %d", temp[r]);
 	else printf("No such element.");
 }
