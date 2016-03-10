@@ -55,7 +55,7 @@ void addNewEngine(Engine** table, int& count)
 
 	printf("Enter name of engine: ");
 	std::cin.ignore();
-	gets(name);
+	gets_s(name, Nmax);
 	if (strlen(name) > maxLengthOfName)
 	{
 		printf("Error. Name is to long! Try later.");
@@ -295,7 +295,7 @@ void searchLine(Engine** table, int& count)
 
 	char* name = new char[Nmax]; // Повна назва двигуна
 	printf("Enter name of engine: ");
-	gets(name);
+	gets_s(name, Nmax);
 	if (strlen(name) > maxLengthOfName)
 	{
 		printf("Error. Name is to long! Try later.");

@@ -38,6 +38,8 @@ int main(void)
 		case '8': searchDirect(table, count); break;
 		case '9': searchLine(table, count); break;
 		case '0': searchBinary(table, count, isSorted); break;
+		case 'q': return 0; break;
+		case 'Q': return 0; break;
 		default: printf("Помилка введеня!\n");
 		}
 
@@ -71,4 +73,5 @@ void textOutput(void)
 	printf("8: Вибiрка за прямою адресою\n");
 	printf("9: Вибiрка лiнiйним пошуком\n");
 	printf("0: Вибiрка бiнарним пошуком\n");
+	printf("Q: Вихiд.\n");
 }
