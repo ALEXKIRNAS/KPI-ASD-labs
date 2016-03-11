@@ -1,10 +1,11 @@
 #include <stdio.h>
 
-void intorduction(void);
+void introduction(void);
+void menu(void);
 
 int main(void)
 {
-
+	introduction();
 }
 
 
@@ -15,4 +16,11 @@ void introduction(void)
 	printf("Labwork #5\n");
 	printf("Author: Sasha Zarichkovyi\n");
 	printf("Variant: %d\n\n", 5106%21 + 1);
+}
+
+// Printing main menu
+void menu(void)
+{
+	printf("Make your choise.\n");
+	printf("Menu:\n1 : Integrate sh(x)\n2 : Integrate cos(x)\nQ : Exit\n");
 }
