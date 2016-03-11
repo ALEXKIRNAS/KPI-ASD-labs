@@ -10,12 +10,14 @@ const double right = exp(1); // Right edge of integrarion
 void introduction(void);
 void menu(void);
 double integration(double(*) (double), double, double);
-double checkOfResult(double, double(*) (double), double, double);
+void checkOfResult(double, double(*) (double), double, double);
 
 int main(void)
 {
 	while (true)
 	{
+		system("cls");
+
 		introduction();
 		menu();
 
@@ -23,12 +25,21 @@ int main(void)
 		double(*infunction) (double); // Corrent function after integration
 
 		char ch = _getch();
+		bool f = 0; // Flag of correct input
 		switch(ch)
 		{
-		case '1': function = sinh; break;
-		case '2': function = cos; break;
+		case '1': function = sinh; infunction = cosh; break;
+		case '2': function = cos; infunction = sin; break;
 		case 'q':
 		case 'Q' : return 0;
+		default: f = 1;
+		}
+
+		if (f)
+		{
+			printf("Input error!");
+			system("pause");
+			continue;
 		}
 
 		double result = integration(function, left, right);
@@ -75,7 +86,7 @@ double integration(double(*function) (double), double left, double right)
 }
 
 // Analizing of real results with expected
-double checkOfResult(double result, double(*function) (double), double left, double right)
+void checkOfResult(double result, double(*function) (double), double left, double right)
 {
 	printf("My integration calculation give: %Lf\n", result);
 	printf("Expected result: %Lf\n", function(right) - function(left));
