@@ -4,6 +4,8 @@
 #include <cmath>
 
 const double calcPerSec = 1e7; // Count of elementary operation per second perform by computer
+const double left = 0; // Left edge of integration
+const double right = exp(1); // Right edge of integrarion
 
 void introduction(void);
 void menu(void);
@@ -17,14 +19,21 @@ int main(void)
 		introduction();
 		menu();
 
+		double(*function) (double); // Corrent function
+		double(*infunction) (double); // Corrent function after integration
+
 		char ch = _getch();
 		switch(ch)
 		{
-		case '1' : 
-		case '2' :
-		case 'q' :
+		case '1': function = sinh; break;
+		case '2': function = cos; break;
+		case 'q':
 		case 'Q' : return 0;
 		}
+
+		double result = integration(function, left, right);
+		checkOfResult(result, infunction, left, right);
+		system("pause");
 	}
 }
 
