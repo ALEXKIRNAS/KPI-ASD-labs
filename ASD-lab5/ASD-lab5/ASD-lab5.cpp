@@ -88,7 +88,7 @@ double integration(double(*function) (double), double left, double right)
 // Analizing of real results with expected
 void checkOfResult(double result, double(*function) (double), double left, double right)
 {
-	printf("My integration calculation give: %Lf\n", result);
-	printf("Expected result: %Lf\n", function(right) - function(left));
+	printf("My integration calculation give: %.10Lf\n", result);
+	printf("Expected result: %.10Lf\n", function(right) - function(left));
 	printf("Delta: %.10Lf\n", abs(function(right) - function(left) - result));
 }
