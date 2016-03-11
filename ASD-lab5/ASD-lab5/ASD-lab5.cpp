@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <cmath>
 
-const double calcPerSec = 1e7; // Count of elementary operation per second perform by computer
+const double calcPerSec = 1e5; // Count of elementary operation per second perform by computer
 const double left = 0; // Left edge of integration
 const double right = exp(1); // Right edge of integrarion
 
@@ -21,8 +21,8 @@ int main(void)
 		introduction();
 		menu();
 
-		double(*function) (double); // Corrent function
-		double(*infunction) (double); // Corrent function after integration
+		double(*function) (double) = nullptr; // Corrent function
+		double(*infunction) (double) = nullptr; // Corrent function after integration
 
 		char ch = _getch();
 		bool f = 0; // Flag of correct input
@@ -37,7 +37,7 @@ int main(void)
 
 		if (f)
 		{
-			printf("Input error!");
+			printf("Input error!\n");
 			system("pause");
 			continue;
 		}
@@ -90,5 +90,5 @@ void checkOfResult(double result, double(*function) (double), double left, doubl
 {
 	printf("My integration calculation give: %Lf\n", result);
 	printf("Expected result: %Lf\n", function(right) - function(left));
-	printf("Delta: %.5Lf\n", abs(function(right) - function(left) - result));
+	printf("Delta: %.10Lf\n", abs(function(right) - function(left) - result));
 }
