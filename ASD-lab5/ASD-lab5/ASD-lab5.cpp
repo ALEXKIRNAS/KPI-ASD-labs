@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <cmath>
 
 const double calcPerSec = 1e7; // Count of elementary operation per second perform by computer
 
 void introduction(void);
 void menu(void);
 double integration(double(*) (double), double, double);
+double checkOfResult(double, double(*) (double), double, double);
 
 int main(void)
 {
@@ -61,4 +63,12 @@ double integration(double(*function) (double), double left, double right)
 	}
 
 	return integrationResult;
+}
+
+// Analizing of real results with expected
+double checkOfResult(double result, double(*function) (double), double left, double right)
+{
+	printf("My integration calculation give: %Lf\n", result);
+	printf("Expected result: %Lf\n", function(right) - function(left));
+	printf("Delta: %.5Lf\n", abs(function(right) - function(left) - result));
 }
