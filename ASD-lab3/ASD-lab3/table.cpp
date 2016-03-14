@@ -211,7 +211,9 @@ void sortByPower(Engine** table, int& count)
 	showEngineTable(table, count);
 
 	Engine** cTable = new Engine*[count];
+	int* temp = new int[count];
 	for (int i = 0; i<count; i++) cTable[i] = table[i];
+	for (int i = 0; i<count; i++) temp[i] = i + 1;
 
 	int min; // Індекс мінімального елементу
 	for (int i = 0; i<count; i++)
@@ -221,10 +223,14 @@ void sortByPower(Engine** table, int& count)
 			if (cTable[min]->power > cTable[z]->power) min = z;
 
 		swap(cTable, i, min);
+		std::swap(temp[i], temp[min]);
 	}
 
 	printf("After:\n");
-	showEngineTable(cTable, count);
+	printf("%-3s%-*s%-10s%-15s%-15s\n", "№", maxLengthOfName + 1, "Name", "Power", "Efficiency", "Fuel consumtion");
+	for (int i = 0; i<count; i++)
+		printf("%-3d%-*s%-10d%-15.2Lf%-15.2Lf\n", temp[i], maxLengthOfName + 1, cTable[i]->name, cTable[i]->power, cTable[i]->efficiency, cTable[i]->fuelConsume);
+	printf("\n");
 }
 
 // Відсортувати таблицю за назвами двигунів
