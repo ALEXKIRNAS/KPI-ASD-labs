@@ -12,17 +12,21 @@ CUser::CUser(char* name, char* password)
 	strcpy(this->password, password);
 }
 
+CUser::CUser(CUser& elem)
+{
+	this->name = new char[strlen(elem.getName()) + 1];
+	strcpy(this->name, elem.getName());
+
+	this->password = new char[strlen(elem.getPassword()) + 1];
+	strcpy(this->password, elem.getPassword());
+}
+
 CUser::~CUser()
 {
 	delete[] name;
 	delete[] password;
 }
 
-// Making hesh for password
-int CUser::getPasswordHash (int mod)
-{
-	return strHesh(password, mod);
-}
 
 // Making hesh for User Name
 int CUser::getUserNameHash (int mod)
@@ -63,4 +67,9 @@ bool CUser::passwordcmp(char* password)
 char* CUser::getName(void)
 {
 	return name;
+}
+
+char* CUser::getPassword(void)
+{
+	return password;
 }
