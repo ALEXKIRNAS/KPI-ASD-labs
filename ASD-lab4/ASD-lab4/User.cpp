@@ -5,10 +5,10 @@ const int Char_Max = 255;
 
 CUser::CUser(char* name, char* password)
 {
-	this->name = new char[strlen(name)];
+	this->name = new char[strlen(name)+1];
 	strcpy(this->name, name);
 
-	this->password = new char[strlen(password)];
+	this->password = new char[strlen(password)+1];
 	strcpy(this->password, password);
 }
 
@@ -18,10 +18,16 @@ CUser::~CUser()
 	delete[] password;
 }
 
-// Making hesh for all strings
-int CUser::getHesh(int mod)
+// Making hesh for password
+int CUser::getPasswordHash (int mod)
 {
-	return (strHesh(name, mod) + strHesh(password, mod)) % mod;
+	return strHesh(password, mod);
+}
+
+// Making hesh for User Name
+int CUser::getUserNameHash (int mod)
+{
+	return strHesh(name, mod);
 }
 
 // Making a hesh for one string
@@ -40,4 +46,21 @@ int CUser::strHesh(char* str, int& mod)
 	}
 
 	return hesh;
+}
+
+// Compare <str> with corrent user <name>
+bool CUser::namecmp(char* str)
+{
+	return !strcmp(str, name);
+}
+
+// Compare <password> with corrent user <password>
+bool CUser::passwordcmp(char* password)
+{
+	return !strcmp(this->password, password);
+}
+
+char* CUser::getName(void)
+{
+	return name;
 }

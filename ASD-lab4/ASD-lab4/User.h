@@ -9,5 +9,9 @@ private:
 public:
 	CUser(char*, char*);
 	~CUser(void);
-	int getHesh(int);
+	int getPasswordHash (int);
+	int getUserNameHash (int);
+	bool namecmp(char*);
+	bool passwordcmp(char*);
+	char* getName(void);
 };
