@@ -14,7 +14,7 @@ void printMenu(void); // Printing main menu to screen
 void add(void); // Adding new member
 void del(void); // Deleating member
 CUser* search(CUser&); // Search member by hesh
-
+void userNames(void); // Printf user Names
 
 int main(void)
 {
@@ -114,4 +114,14 @@ void del(void)
 
 	}
 	else printf("Error. No such user!\n");
+}
+
+// Printf user Names
+void userNames(void)
+{
+	printf("%5s%s\n", "¹", "Names");
+	int count = 1;
+	for (int i = 0; i < Nmax; i++)
+		for (int z = 0; z < dataBase[i].size(); z++)
+			printf("%-5d%s\n", count++, dataBase[i][z].getName());
 }
