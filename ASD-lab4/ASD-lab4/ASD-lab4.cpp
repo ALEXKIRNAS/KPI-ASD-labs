@@ -125,4 +125,5 @@ void userNames(void)
 	for (int i = 0; i < Nmax; i++)
 		for (int z = 0; z < dataBase[i].size(); z++)
 			printf("%-5d%s\n", count++, dataBase[i][z].getName());
+	if (count == 1) printf("NaN  No information in data base.\n");
 }
