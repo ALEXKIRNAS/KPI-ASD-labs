@@ -15,6 +15,7 @@ void add(void); // Adding new member
 void del(void); // Deleating member
 CUser* search(CUser&); // Search member by hesh
 void userNames(void); // Printf user Names
+void showHesh(void); // Shows hesh-numbers for all users
 
 int main(void)
 {
@@ -29,6 +30,7 @@ int main(void)
 		case '1': add(); break;
 		case '2': del(); break;
 		case '3': userNames(); break;
+		case '4': showHesh(); break;
 		case 'q': return 0;
 		}
 		system("pause");
@@ -126,4 +128,26 @@ void userNames(void)
 		for (int z = 0; z < dataBase[i].size(); z++)
 			printf("%-5d%s\n", count++, dataBase[i][z].getName());
 	if (count == 1) printf("NaN  No information in data base.\n");
+}
+
+// Shows hesh-numbers for all users
+void showHesh(void)
+{
+	printf("Enter admin password: ");
+	char pass[51];
+	gets_s(pass);
+	if (strcmp(pass, "1234") != 0)
+	{
+		printf("Wrong password! Try later.\n");
+		return;
+	}
+
+	for (int i = 0; i < Nmax; i++)
+		if (dataBase[i].size())
+		{
+			printf("Hesh %d:\n\n", i);
+			for (int z = 0; z < dataBase[i].size(); z++)
+				printf("Name:%s\n", dataBase[i][z].getName());
+			printf("\n\n\n");
+		}
 }
