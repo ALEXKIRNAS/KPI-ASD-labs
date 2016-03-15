@@ -28,6 +28,7 @@ int main(void)
 		{
 		case '1': add(); break;
 		case '2': del(); break;
+		case '3': userNames(); break;
 		case 'q': return 0;
 		}
 		system("pause");
@@ -119,7 +120,7 @@ void del(void)
 // Printf user Names
 void userNames(void)
 {
-	printf("%5s%s\n", "¹", "Names");
+	printf("%-5s%s\n", "#", "Names");
 	int count = 1;
 	for (int i = 0; i < Nmax; i++)
 		for (int z = 0; z < dataBase[i].size(); z++)
