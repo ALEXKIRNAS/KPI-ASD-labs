@@ -16,4 +16,5 @@ public:
 	bool passwordcmp(char*);
 	char* getName(void) const;
 	char* getPassword(void) const;
+	void setPassword(char*);
 };

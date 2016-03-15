@@ -17,6 +17,7 @@ CUser* search(CUser&); // Search member by hesh
 void userNames(void); // Printf user Names
 void showHesh(void); // Shows hesh-numbers for all users
 void showUserPassword(void); // Show user names and passwords
+void editPassword(void); // Change password
 
 int main(void)
 {
@@ -25,6 +26,7 @@ int main(void)
 		system("cls");
 		printMenu();
 		char ch = _getch();
+		system("cls");
 
 		switch (ch)
 		{
@@ -33,6 +35,7 @@ int main(void)
 		case '3': userNames(); break;
 		case '4': showHesh(); break;
 		case '5': showUserPassword(); break;
+		case '6': editPassword(); break;
 		case 'Q': 
 		case 'q': return 0;
 		}
@@ -49,6 +52,7 @@ void printMenu(void)
 	printf("3: View user names.\n");
 	printf("4: View hesh of user names (administration only).\n");
 	printf("5: Veiw user names and passowords (administration only).\n");
+	printf("6: Change password.\n");
 	printf("Q: Exit.\n");
 }
 
@@ -173,4 +177,42 @@ void showUserPassword(void)
 		for (int z = 0; z < dataBase[i].size(); z++)
 			printf("%-5d%-20s%s\n", count++, dataBase[i][z].getName(), dataBase[i][z].getPassword());
 	if (count == 1) printf("NaN  No information in data base.\n");
+}
+
+// Change password
+void editPassword(void)
+{
+	const int lens = 51;
+	char name[lens], password[lens];
+	printf("Enter login (maximum 50 simbols): ");
+	gets_s(name);
+
+	CUser temp = CUser(name, "12345");
+
+	if (search(temp) != nullptr)
+	{
+		printf("Enter password (maximum 50 simbols): ");
+		gets_s(password);
+		CUser unit = CUser(name, password);
+
+		if (strcmp(search(temp)->getPassword(), password) == 0)
+		{
+			int index = unit.getUserNameHash(Nmax);
+			for (int i = 0; i < dataBase[index].size(); i++) if (strcmp(unit.getName(), dataBase[index][i].getName()) == 0)
+			{
+				printf("Enter new password (maximum 50 simbols): ");
+				gets_s(password);
+				dataBase[index][i].setPassword(password);
+				printf("Password changed sucssesful!\n");
+				break;
+			}
+		}
+		else
+		{
+			printf("Error. Wrong password!\n");
+			return;
+		}
+
+	}
+	else printf("Error. No such user!\n");
 }

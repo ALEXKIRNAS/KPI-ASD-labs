@@ -73,3 +73,10 @@ char*  CUser::getPassword(void) const
 {
 	return password;
 }
+
+void CUser::setPassword(char* password)
+{
+	delete[] this->password;
+	this->password = new char[strlen(password) + 1];
+	strcpy(this->password, password);
+}
