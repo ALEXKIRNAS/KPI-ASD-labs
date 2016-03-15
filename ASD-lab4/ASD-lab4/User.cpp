@@ -32,7 +32,8 @@ int CUser::strHesh(char* str, int& mod)
 
 	for (int i = strlen(str) - 1; i >= 0; i--)
 	{
-		if (k == 0) break;
+		if (k == 0) 
+			break;
 		hesh = (hesh + k*str[i]) % mod;
 		
 		k = (k*Char_Max) % mod;
