@@ -148,10 +148,10 @@ void showHesh(void)
 	for (int i = 0; i < Nmax; i++)
 		if (dataBase[i].size())
 		{
-			printf("Hesh %d:\n\n", i);
+			printf("Hesh %d:\n", i);
 			for (int z = 0; z < dataBase[i].size(); z++)
 				printf("Name:%s\n", dataBase[i][z].getName());
-			printf("\n\n\n");
+			printf("\n\n");
 		}
 }
 
@@ -167,7 +167,7 @@ void showUserPassword(void)
 		return;
 	}
 
-	printf("%-5s%-20s\n", "#", "Names", "Passwords");
+	printf("%-5s%-20s%s\n", "#", "Names", "Passwords");
 	int count = 1;
 	for (int i = 0; i < Nmax; i++)
 		for (int z = 0; z < dataBase[i].size(); z++)
