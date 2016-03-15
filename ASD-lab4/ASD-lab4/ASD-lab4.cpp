@@ -12,6 +12,7 @@ vector <CUser> dataBase [Nmax]; // Holding a User hesh for quich search
 
 void printMenu(void); // Printing main menu to screen
 void add(void); // Adding new member
+void del(void); // Deleating member
 CUser* search(CUser&); // Search member by hesh
 
 
@@ -26,6 +27,7 @@ int main(void)
 		switch (ch)
 		{
 		case '1': add(); break;
+		case '2': del(); break;
 		case 'q': return 0;
 		}
 		system("pause");
@@ -76,4 +78,40 @@ CUser* search(CUser& user)
 	for (int i = 0; i < dataBase[hesh].size(); i++)
 		if (dataBase[hesh][i].namecmp(user.getName())) return &dataBase[hesh][i];
 	return nullptr;
+}
+
+// Deleating member
+void del(void)
+{
+	const int lens = 51;
+	char name[lens], password[lens];
+	printf("Enter login (maximum 50 simbols): ");
+	gets_s(name);
+
+	CUser temp = CUser(name, "12345");
+	
+	if (search(temp) != nullptr)
+	{
+		printf("Enter password (maximum 50 simbols): ");
+		gets_s(password);
+		CUser unit = CUser(name, password);
+
+		if (strcmp(search(temp)->getPassword(), password) == 0)
+		{
+			int index = unit.getUserNameHash(Nmax);
+			for (int i = 0; i < dataBase[index].size(); i++) if (strcmp(unit.getName(), dataBase[index][i].getName()) == 0)
+			{
+				dataBase[index].erase(dataBase[index].begin() + i, dataBase[index].begin() + i + 1);
+				printf("User deleated sucssecful!\n");
+				break;
+			}
+		}
+		else
+		{
+			printf("Error. Wrong password!\n");
+			return;
+		}
+
+	}
+	else printf("Error. No such user!\n");
 }
