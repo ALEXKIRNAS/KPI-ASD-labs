@@ -8,12 +8,12 @@ private:
 	int strHesh(char*, int&);
 public:
 	CUser(char*, char*);
-	CUser(CUser&);
+	CUser(const CUser&);
 	~CUser(void);
 
 	int getUserNameHash (int);
 	bool namecmp(char*);
 	bool passwordcmp(char*);
-	char* getName(void);
-	char* getPassword(void);
+	char* getName(void) const;
+	char* getPassword(void) const;
 };

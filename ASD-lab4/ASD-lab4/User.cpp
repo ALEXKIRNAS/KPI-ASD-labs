@@ -12,7 +12,7 @@ CUser::CUser(char* name, char* password)
 	strcpy(this->password, password);
 }
 
-CUser::CUser(CUser& elem)
+CUser::CUser(const CUser& elem)
 {
 	this->name = new char[strlen(elem.getName()) + 1];
 	strcpy(this->name, elem.getName());
@@ -64,12 +64,12 @@ bool CUser::passwordcmp(char* password)
 	return !strcmp(this->password, password);
 }
 
-char* CUser::getName(void)
+char* CUser::getName(void) const 
 {
 	return name;
 }
 
-char* CUser::getPassword(void)
+char*  CUser::getPassword(void) const 
 {
 	return password;
 }
